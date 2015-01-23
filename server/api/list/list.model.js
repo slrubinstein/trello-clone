@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 var ListSchema = new Schema({
   name: String,
   creator: { type: Schema.Types.ObjectId, ref: 'User' },
-  dateCreated: { type: Date, default: Date.now }
+  dateCreated: { type: Date, default: Date.now },
   notes: [{ type: Schema.Types.ObjectId, ref: 'Note' }]
 });
 
