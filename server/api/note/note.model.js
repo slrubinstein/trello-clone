@@ -5,8 +5,9 @@ var mongoose = require('mongoose'),
 
 var NoteSchema = new Schema({
   name: String,
-  info: String,
-  active: Boolean
+  description: String,
+  creator: { type: Schema.Types.ObjectId, ref: 'User' },
+  dateCreated: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('Note', NoteSchema);

@@ -5,8 +5,9 @@ var mongoose = require('mongoose'),
 
 var ListSchema = new Schema({
   name: String,
-  info: String,
-  active: Boolean
+  creator: { type: Schema.Types.ObjectId, ref: 'User' },
+  dateCreated: { type: Date, default: Date.now }
+  notes: [{ type: Schema.Types.ObjectId, ref: 'Note' }]
 });
 
 module.exports = mongoose.model('List', ListSchema);
