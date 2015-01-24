@@ -94,6 +94,35 @@ exports.me = function(req, res, next) {
 };
 
 /**
+ * Get my lists
+ */
+exports.getLists = function(req, res, next) {
+  var userId = req.user._id;
+  User.findOne({
+    _id: userId
+  })
+    .populate('lists')
+    .exec(function(err, user) {
+      if (err) return next(err);
+      console.log(user.lists)
+      res.json(user.lists);
+    });
+};
+
+/**
+ * Add new list
+ */
+exports.addList = function(req, res, next) {
+  var userId = req.user._id,
+      listId = req.body.listId;
+  User.findOne( { _id: userId } , function(err, user) {
+    if (err) return next(err);
+    user.lists.push(listId);
+    user.save();
+  });
+};
+
+/**
  * Authentication callback
  */
 exports.authCallback = function(req, res, next) {

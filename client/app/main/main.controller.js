@@ -3,39 +3,56 @@
 angular.module('trelloApp')
   .controller('MainCtrl', MainCtrl);
 
-MainCtrl.$inject = ['socket', 'dataService'];
+MainCtrl.$inject = ['socket', 'dataService', '$scope', 'Auth',
+                    'User'];
 
-function MainCtrl(socket, dataService) {
+function MainCtrl(socket, dataService, $scope, Auth, User) {
 
   var vm = this;
 
-  vm.lists = [1,2,3]
-    // $scope.awesomeThings = [];
+  vm.lists = []
+  vm.createList = createList;
+  vm.deleteList = deleteList;
   vm.get = get;
-    // $http.get('/api/things').success(function(awesomeThings) {
-    //   $scope.awesomeThings = awesomeThings;
-    //   socket.syncUpdates('thing', $scope.awesomeThings);
-    // });
+  vm.newListName = '';
+  vm.user = '';
 
-    // $scope.addThing = function() {
-    //   if($scope.newThing === '') {
-    //     return;
-    //   }
-    //   $http.post('/api/things', { name: $scope.newThing });
-    //   $scope.newThing = '';
-    // };
+  activate();
 
-    // $scope.deleteThing = function(thing) {
-    //   $http.delete('/api/things/' + thing._id);
-    // };
+  function activate() {
+    Auth.isLoggedInAsync(setUser);
+    socket.syncUpdates('list', vm.lists);
 
-    // $scope.$on('$destroy', function () {
-    //   socket.unsyncUpdates('thing');
-    // });
+    function setUser(validUser) {
+      if (validUser) {
+        User.get({}, function(user) {
+          vm.user = user;
+          get(user._id);
+        });
+      }
+    }
+  }
 
+  $scope.$on('$destroy', function () {
+    socket.unsyncUpdates('list');
+  });
+
+  function createList() {
+    dataService.createList({name: vm.newListName,
+                         creator: vm.user._id});
+    vm.newListName = '';
+    get();
+  }
+
+
+  function deleteList() {
+
+  }
 
   function get() {
-    vm.lists = dataService.get();
-    socket.syncUpdates('list', vm.lists);
+    dataService.get(vm.user._id)
+      .then(function(lists) {
+        vm.lists = lists.data;
+      });
   }
 }

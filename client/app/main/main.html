@@ -2,6 +2,13 @@
 
 <header class="trello-board" id="banner">
   <div class="container">
+
+    <h3>Create a new list</h3>
+    List name:<input class="form-control" 
+                     type="text"
+                     ng-model="main.newListName" />
+    <button class="btn btn-default"
+            ng-click="main.createList()">Add list</button>
     <div class="list-column"
          ng-repeat="list in main.lists">
          {{list}}
