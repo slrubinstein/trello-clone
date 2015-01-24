@@ -5,6 +5,8 @@ angular.module('trelloApp')
     return {
       templateUrl: 'app/userLists/userLists.html',
       restrict: 'E',
-      scope: {}
+      scope: {},
+      controller: 'MainCtrl',
+      controllerAs: 'main'
     };
   });

@@ -51,6 +51,7 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
   }
 
   function createNote(index) {
+    console.log(index)
     dataService.createNote({
       name: vm.newNoteName,
       creatorId: vm.user._id,
@@ -69,13 +70,8 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
   function get() {
     listService.getLists(vm.user._id)
       .then(function(lists) {
-        // console.log(lists)
         vm.lists = lists
       });
-      // .then(function(lists) {
-      //   listService.lists = lists.data;
-      //   // vm.lists = listService.lists;
-      // });
   }
 
 }
