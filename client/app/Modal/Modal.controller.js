@@ -22,12 +22,9 @@ angular.module('trelloApp')
   };
 
   function save() {
-  	console.log(vm.listIndex)
-  	console.log(listService.lists)
 	  dataService.createNote({
 	    name: vm.noteName,
-	    // creatorId: vm.user._id,
-	    // creatorName: vm.user.name,
+      description: vm.noteDescription,
 	    listId: listService.lists[vm.listIndex]._id
 	  })
 	  .then(function() {

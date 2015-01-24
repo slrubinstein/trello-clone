@@ -5,13 +5,13 @@
 	<h5>{{list.creatorName}}</h5>
 	<h5>{{list.dateCreated | date:'medium'}}</h5>
 
-	<ul ng-repeat="note in list.notes">
-  	<li class="note">
-  		<h4>{{note.name}}</h4>
+	<div ng-repeat="note in list.notes">
+  	<div class="note">
+  		<h5>{{note.name}}</h5>
   		<p>{{note.description}}</p>
 
-  	</li>
-	</ul>
+  	</div>
+	</div>
 	<button class="btn btn-default"
         	ng-click="main.createNote($index)">New Note</button>
 
