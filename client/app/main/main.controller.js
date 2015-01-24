@@ -3,10 +3,11 @@
 angular.module('trelloApp')
   .controller('MainCtrl', MainCtrl);
 
-MainCtrl.$inject = ['socket', 'dataService', '$scope', 'Auth',
-                    'User'];
+MainCtrl.$inject = ['socket', 'dataService', '$scope', 'Auth', 'User',
+                    'listService'];
 
-function MainCtrl(socket, dataService, $scope, Auth, User) {
+function MainCtrl(socket, dataService, $scope, Auth, User,
+                  listService) {
 
   var vm = this;
 
@@ -40,16 +41,13 @@ function MainCtrl(socket, dataService, $scope, Auth, User) {
   });
 
   function createList() {
-    dataService.createList({
+    vm.lists = listService.createList({
       name: vm.newListName,
       creatorId: vm.user._id,
       creatorName: vm.user.name
     })
-      .then(function() {
-        vm.newListName = '';
-
-        get();
-      });
+    vm.newListName = '';
+    // vm.lists = listService.lists;
   }
 
   function createNote(index) {
@@ -69,9 +67,15 @@ function MainCtrl(socket, dataService, $scope, Auth, User) {
   }
 
   function get() {
-    dataService.get(vm.user._id)
+    listService.getLists(vm.user._id)
       .then(function(lists) {
-        vm.lists = lists.data;
+        // console.log(lists)
+        vm.lists = lists
       });
+      // .then(function(lists) {
+      //   listService.lists = lists.data;
+      //   // vm.lists = listService.lists;
+      // });
   }
+
 }
