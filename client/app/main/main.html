@@ -13,17 +13,9 @@
 
     <div class="list-column col-lg-2 col-md-2 col-sm-2"
          ng-repeat="list in main.lists">
-      {{list.name}}
-      {{list.creatorName}}
-      {{list.dateCreated}}
-      <ul ng-repeat="note in list.notes">
-        <li class="note">{{note}}</li>
-      </ul>
-      <input class="form-control" 
-             type="text"
-             ng-model="main.newNoteName" />
-      <button class="btn btn-default"
-              ng-click="main.createNote($index)">New Note</button>
+
+      <user-lists></user-lists>
+      
     </div>
     
   </div>
