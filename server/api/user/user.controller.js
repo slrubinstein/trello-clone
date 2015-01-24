@@ -104,7 +104,6 @@ exports.getLists = function(req, res, next) {
     .populate('lists')
     .exec(function(err, user) {
       if (err) return next(err);
-      console.log(user.lists)
       res.json(user.lists);
     });
 };

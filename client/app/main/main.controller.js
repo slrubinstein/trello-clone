@@ -38,10 +38,14 @@ function MainCtrl(socket, dataService, $scope, Auth, User) {
   });
 
   function createList() {
-    dataService.createList({name: vm.newListName,
-                         creator: vm.user._id});
-    vm.newListName = '';
-    get();
+    dataService.createList(
+      {name: vm.newListName,
+      creatorId: vm.user._id,
+      creatorName: vm.user.name})
+        .then(function() {
+          vm.newListName = '';
+          get();
+        });
   }
 
 

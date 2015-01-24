@@ -30,7 +30,7 @@ angular.module('trelloApp')
        */
       syncUpdates: function (modelName, array, cb) {
         cb = cb || angular.noop;
-console.log(array)
+
         /**
          * Syncs item creation/updates on 'model:save'
          */

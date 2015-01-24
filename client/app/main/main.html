@@ -11,7 +11,9 @@
             ng-click="main.createList()">Add list</button>
     <div class="list-column"
          ng-repeat="list in main.lists">
-         {{list}}
+         {{list.name}}
+         {{list.creatorName}}
+         {{list.dateCreated}}
     </div>
     
   </div>
