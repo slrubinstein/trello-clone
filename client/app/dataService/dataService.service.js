@@ -26,7 +26,7 @@ function dataService($http, $q) {
         .then(function(list) {
         $http.put('api/users/' + newListOptions.creatorId
             + '/lists/add', {listId: list.data._id})
-        debugger
+
         })
     );
     return deferred.promise;

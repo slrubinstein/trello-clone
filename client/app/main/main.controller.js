@@ -47,7 +47,7 @@ function MainCtrl(socket, dataService, $scope, Auth, User) {
     })
       .then(function() {
         vm.newListName = '';
-        debugger
+
         get();
       });
   }

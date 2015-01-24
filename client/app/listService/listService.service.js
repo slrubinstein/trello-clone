@@ -1,16 +1,16 @@
 'use strict';
 
 angular.module('trelloApp')
-  .factory('listService', function () {
-    // Service logic
-    // ...
+  .factory('listService', listService);
 
-    var meaningOfLife = 42;
 
-    // Public API here
+
+  function listService() {
+
+    var lists = [];
+
     return {
-      someMethod: function () {
-        return meaningOfLife;
+
       }
     };
   });
