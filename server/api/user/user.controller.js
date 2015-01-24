@@ -118,6 +118,7 @@ exports.addList = function(req, res, next) {
     if (err) return next(err);
     user.lists.push(listId);
     user.save();
+    return res.send(200);
   });
 };
 

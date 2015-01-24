@@ -1,16 +1,17 @@
 <div class="list-column col-lg-2 col-md-2 col-sm-2"
      ng-repeat="list in main.lists">
 
-  {{list.name}}
-	{{list.creatorName}}
-	{{list.dateCreated}}
+  <h4>{{list.name}}</h4>
+	<h5>{{list.creatorName}}</h5>
+	<h5>{{list.dateCreated | date:'medium'}}</h5>
 
 	<ul ng-repeat="note in list.notes">
-  	<li class="note">{{note}}</li>
+  	<li class="note">
+  		<h4>{{note.name}}</h4>
+  		<p>{{note.description}}</p>
+
+  	</li>
 	</ul>
-	<input class="form-control" 
-      	 type="text"
-      	 ng-model="main.newNoteName" />
 	<button class="btn btn-default"
         	ng-click="main.createNote($index)">New Note</button>
 

@@ -1,0 +1,18 @@
+<script type="text/ng-template" id="noteModal.html">
+  <div class="modal-header">
+    <input type="text"
+	    		class="modal-title"
+	    		ng-model="modal.noteName"
+	    		value="modal.noteName" />
+  </div>
+  <div class="modal-body">
+  	<input type="textbox"
+  				 ng-model="modal.noteDescription"
+  				 value="modal.noteDescription" />
+    
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" ng-click="modal.save()">Save</button>
+    <button class="btn btn-warning" ng-click="modal.cancel()">Cancel</button>
+  </div>
+</script>

@@ -10,8 +10,8 @@ function listService(dataService) {
   var lists = [];
 
   return {
-    createList: createList,
-    getLists: getLists,
+    // createList: createList,
+    // getLists: getLists,
     lists: lists
   }
 
@@ -21,11 +21,4 @@ function listService(dataService) {
     return lists;
   }
 
-  function getLists(userId) {
-    return dataService.get(userId)
-      .then(function(promise) {
-        lists = promise.data;
-        return lists;
-      });
-  }
 }

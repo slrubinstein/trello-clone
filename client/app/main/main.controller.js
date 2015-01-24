@@ -4,18 +4,18 @@ angular.module('trelloApp')
   .controller('MainCtrl', MainCtrl);
 
 MainCtrl.$inject = ['socket', 'dataService', '$scope', 'Auth', 'User',
-                    'listService'];
+                    'listService', '$modal'];
 
 function MainCtrl(socket, dataService, $scope, Auth, User,
-                  listService) {
+                  listService, $modal) {
 
   var vm = this;
 
-  vm.lists = []
   vm.createList = createList;
   vm.createNote = createNote;
   vm.deleteList = deleteList;
   vm.get = get;
+  vm.lists = []
   vm.newListName = '';
   vm.newNoteName = '';
   vm.user = '';
@@ -41,26 +41,49 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
   });
 
   function createList() {
-    vm.lists = listService.createList({
+
+    dataService.createList({
       name: vm.newListName,
       creatorId: vm.user._id,
       creatorName: vm.user.name
     })
+    .then(function(result) {
+      updateUserLists(result.data._id)
+    })
+
     vm.newListName = '';
-    // vm.lists = listService.lists;
+  }
+
+  function updateUserLists(listId) {
+    dataService.updateUserLists(vm.user._id, listId)
+    .then(function() {
+      get()
+    })
   }
 
   function createNote(index) {
-    console.log(index)
-    dataService.createNote({
-      name: vm.newNoteName,
-      creatorId: vm.user._id,
-      creatorName: vm.user.name,
-      listId: vm.lists[index]._id
-    })
-      .then(function() {
-        get();
-      })
+  
+    var modalInstance = $modal.open({
+      templateUrl: 'noteModal.html',
+      resolve: {
+        noteData: function() {
+          var noteData = {
+            noteName: '',
+            noteDescription: '',
+            listIndex: index
+          };
+          return noteData;
+        }
+      },
+      controller: 'ModalCtrl',
+      controllerAs: 'modal',
+    });
+
+    modalInstance.result.then(function(result) {
+      get();
+    });
+
+
   }
 
   function deleteList() {
@@ -68,10 +91,14 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
   }
 
   function get() {
-    listService.getLists(vm.user._id)
-      .then(function(lists) {
-        vm.lists = lists
+    dataService.get(vm.user._id)
+    .then(function(result) {
+      listService.lists.length = 0;
+      result.data.forEach(function(list) {
+        listService.lists.push(list);
       });
+      vm.lists = listService.lists;
+    })
   }
 
 }

@@ -13,37 +13,21 @@ function dataService($http, $q) {
     createList: createList,
     createNote: createNote,
     get: get,
-    deleteList: deleteList
+    deleteList: deleteList,
+    updateUserLists: updateUserLists
   }
 
   function createList(newListOptions) {
-    var deferred = $q.defer();
+    return $http.post('/api/lists', newListOptions)
+  }
 
-    // wrapping a promise around both $http calls to ensure
-    // controller waits until both resolve
-    deferred.resolve(
-      $http.post('/api/lists', newListOptions)
-        .then(function(list) {
-        $http.put('api/users/' + newListOptions.creatorId
-            + '/lists/add', {listId: list.data._id})
-
-        })
-    );
-    return deferred.promise;
+  function updateUserLists(userId, listId) {
+    return $http.put('api/users/' + userId
+                  + '/lists/add', {listId: listId,
+                                   userId: userId})
   }
 
   function createNote(newNoteOptions) {
-    // var deferred = $q.defer();
-
-    // deferred.resolve(
-    //   $http.post('/api/notes', newNoteOptions)
-    //     .then(function(note) {
-    //       $http.put('api/lists/' + newNoteOptions.listId,
-    //         {noteId: note.data._id});
-    //     })
-    // );
-    // return deferred.promise;
-
     return $http.put('/api/lists/' + newNoteOptions.listId +
               '/addnote', newNoteOptions)
   }

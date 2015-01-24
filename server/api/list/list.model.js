@@ -13,7 +13,7 @@ var ListSchema = new Schema({
 	  description: String,
 	  creatorId: { type: Schema.Types.ObjectId, ref: 'User' },
 	  creatorName: String,
-	  datezCreated: { type: Date, default: Date.now },
+	  dateCreated: { type: Date, default: Date.now },
 	}]
 });
 
