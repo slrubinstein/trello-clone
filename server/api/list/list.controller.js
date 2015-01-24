@@ -36,15 +36,35 @@ exports.update = function(req, res) {
     if(!list) { return res.send(404); }
     var updated = _.merge(list, req.body);
     updated.save(function (err) {
+      console.log(updated)
       if (err) { return handleError(res, err); }
       return res.json(200, list);
     });
   });
 };
 
+// Updates an existing list's notes in the DB.
+exports.updateNote = function(req, res) {
+  console.log('update')
+  if(req.body._id) { delete req.body._id; }
+  console.log('id', req.params.id)
+  List.findById(req.params.id, function (err, list) {
+    if (err) { return handleError(res, err); }
+    if(!list) { return res.send(404); }
+    console.log(list.notes)
+    console.log('==================')
+    console.log(req.body.index)
+    console.log(req.body.noteOptions)
+    list.notes.splice(req.body.index, 1, req.body.noteOptions);
+    list.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, list);
+    });
+  });
+};
 
 // Adds a note to an existing list in the DB.
-exports.addnote = function(req, res) {
+exports.addNote = function(req, res) {
   if(req.body._id) { delete req.body._id; }
   List.findById(req.params.id, function (err, list) {
     if (err) { return handleError(res, err); }

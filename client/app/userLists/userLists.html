@@ -5,7 +5,8 @@
 	<h5>{{list.creatorName}}</h5>
 	<h5>{{list.dateCreated | date:'medium'}}</h5>
 
-	<div ng-repeat="note in list.notes">
+	<div ng-repeat="note in list.notes"
+       ng-click="main.createNote($parent.$index, note.name, note.description, $index)">
   	<div class="note">
   		<h5>{{note.name}}</h5>
   		<p>{{note.description}}</p>

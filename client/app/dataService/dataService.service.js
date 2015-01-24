@@ -14,17 +14,12 @@ function dataService($http, $q) {
     createNote: createNote,
     get: get,
     deleteList: deleteList,
+    updateNote: updateNote,
     updateUserLists: updateUserLists
   }
 
   function createList(newListOptions) {
     return $http.post('/api/lists', newListOptions)
-  }
-
-  function updateUserLists(userId, listId) {
-    return $http.put('api/users/' + userId
-                  + '/lists/add', {listId: listId,
-                                   userId: userId})
   }
 
   function createNote(newNoteOptions) {
@@ -40,6 +35,18 @@ function dataService($http, $q) {
 
   }
 
+  function updateNote(noteOptions, noteIndex) {
+    console.log(noteOptions)
+    return $http.put('/api/lists/' + noteOptions.listId + '/updatenote', 
+      {index: noteIndex,
+       noteOptions: noteOptions});
+  }
+
+  function updateUserLists(userId, listId) {
+    return $http.put('api/users/' + userId
+                  + '/lists/add', {listId: listId,
+                                   userId: userId})
+  }
 
 };
 

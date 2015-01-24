@@ -61,16 +61,17 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
     })
   }
 
-  function createNote(index) {
-  
+  function createNote(listIndex, noteName, noteDescription, noteIndex) {
+    console.log(noteIndex)
     var modalInstance = $modal.open({
       templateUrl: 'noteModal.html',
       resolve: {
         noteData: function() {
           var noteData = {
-            noteName: '',
-            noteDescription: '',
-            listIndex: index
+            noteName: noteName || '',
+            noteDescription: noteDescription || '',
+            listIndex: listIndex,
+            noteIndex: noteIndex
           };
           return noteData;
         }
