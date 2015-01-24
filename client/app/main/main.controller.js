@@ -12,9 +12,11 @@ function MainCtrl(socket, dataService, $scope, Auth, User) {
 
   vm.lists = []
   vm.createList = createList;
+  vm.createNote = createNote;
   vm.deleteList = deleteList;
   vm.get = get;
   vm.newListName = '';
+  vm.newNoteName = '';
   vm.user = '';
 
   activate();
@@ -38,16 +40,28 @@ function MainCtrl(socket, dataService, $scope, Auth, User) {
   });
 
   function createList() {
-    dataService.createList(
-      {name: vm.newListName,
+    dataService.createList({
+      name: vm.newListName,
       creatorId: vm.user._id,
-      creatorName: vm.user.name})
-        .then(function() {
-          vm.newListName = '';
-          get();
-        });
+      creatorName: vm.user.name
+    })
+      .then(function() {
+        vm.newListName = '';
+        get();
+      });
   }
 
+  function createNote(index) {
+    dataService.createNote({
+      name: vm.newNoteName,
+      creatorId: vm.user._id,
+      creatorName: vm.user.name,
+      listId: vm.lists[index]._id
+    })
+      .then(function() {
+        get();
+      })
+  }
 
   function deleteList() {
 

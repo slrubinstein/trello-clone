@@ -6,7 +6,8 @@ var mongoose = require('mongoose'),
 var NoteSchema = new Schema({
   name: String,
   description: String,
-  creator: { type: Schema.Types.ObjectId, ref: 'User' },
+  creatorId: { type: Schema.Types.ObjectId, ref: 'User' },
+  creatorName: String,
   dateCreated: { type: Date, default: Date.now },
 });
 

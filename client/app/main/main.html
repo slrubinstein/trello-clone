@@ -2,18 +2,28 @@
 
 <header class="trello-board" id="banner">
   <div class="container">
+    <div class="container">
+      <h3>Create a new list</h3>
+      List name:<input class="form-control" 
+                       type="text"
+                       ng-model="main.newListName" />
+      <button class="btn btn-default"
+              ng-click="main.createList()">Add list</button>
+    </div>
 
-    <h3>Create a new list</h3>
-    List name:<input class="form-control" 
-                     type="text"
-                     ng-model="main.newListName" />
-    <button class="btn btn-default"
-            ng-click="main.createList()">Add list</button>
-    <div class="list-column"
+    <div class="list-column col-lg-2 col-md-2 col-sm-2"
          ng-repeat="list in main.lists">
-         {{list.name}}
-         {{list.creatorName}}
-         {{list.dateCreated}}
+      {{list.name}}
+      {{list.creatorName}}
+      {{list.dateCreated}}
+      <ul ng-repeat="note in list.notes">
+        <li class="note">{{note}}</li>
+      </ul>
+      <input class="form-control" 
+             type="text"
+             ng-model="main.newNoteName" />
+      <button class="btn btn-default"
+              ng-click="main.createNote($index)">New Note</button>
     </div>
     
   </div>

@@ -6,6 +6,8 @@
 'use strict';
 
 var User = require('../api/user/user.model');
+var List = require('../api/list/list.model');
+var Note = require('../api/note/note.model');
 
 User.find({}).remove(function() {
   User.create({
@@ -24,3 +26,7 @@ User.find({}).remove(function() {
     }
   );
 });
+
+List.find({}).remove(function() {});
+
+Note.find({}).remove(function() {});
