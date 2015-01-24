@@ -19,8 +19,8 @@ function dataService($http, $q) {
   function createList(newListOptions) {
     var deferred = $q.defer();
 
-    // creating a promise around both $http calls to ensure
-    // controller's get is not called until both resolve
+    // wrapping a promise around both $http calls to ensure
+    // controller waits until both resolve
     deferred.resolve(
       $http.post('/api/lists', newListOptions)
         .then(function(list) {

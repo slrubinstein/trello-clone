@@ -49,7 +49,6 @@ exports.update = function(req, res) {
   List.findById(req.params.id, function (err, list) {
     if (err) { return handleError(res, err); }
     if(!list) { return res.send(404); }
-    console.log('REQ BODY', req.body)
     list.notes.push(req.body.noteId);
     list.save(function (err) {
       if (err) { return handleError(res, err); }
