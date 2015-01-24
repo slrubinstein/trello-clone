@@ -8,7 +8,13 @@ var ListSchema = new Schema({
   creatorId: { type: Schema.Types.ObjectId, ref: 'User' },
   creatorName: String,
   dateCreated: { type: Date, default: Date.now },
-  notes: [{ type: Schema.Types.ObjectId, ref: 'Note' }]
+  notes: [{
+	  name: String,
+	  description: String,
+	  creatorId: { type: Schema.Types.ObjectId, ref: 'User' },
+	  creatorName: String,
+	  datezCreated: { type: Date, default: Date.now },
+	}]
 });
 
 module.exports = mongoose.model('List', ListSchema);

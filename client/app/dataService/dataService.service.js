@@ -26,22 +26,26 @@ function dataService($http, $q) {
         .then(function(list) {
         $http.put('api/users/' + newListOptions.creatorId
             + '/lists/add', {listId: list.data._id})
+        debugger
         })
     );
     return deferred.promise;
   }
 
   function createNote(newNoteOptions) {
-    var deferred = $q.defer();
+    // var deferred = $q.defer();
 
-    deferred.resolve(
-      $http.post('/api/notes', newNoteOptions)
-        .then(function(note) {
-          $http.put('api/lists/' + newNoteOptions.listId,
-            {noteId: note.data._id});
-        })
-    );
-    return deferred.promise;
+    // deferred.resolve(
+    //   $http.post('/api/notes', newNoteOptions)
+    //     .then(function(note) {
+    //       $http.put('api/lists/' + newNoteOptions.listId,
+    //         {noteId: note.data._id});
+    //     })
+    // );
+    // return deferred.promise;
+
+    return $http.put('/api/lists/' + newNoteOptions.listId +
+              '/addnote', newNoteOptions)
   }
 
   function get(userId) {

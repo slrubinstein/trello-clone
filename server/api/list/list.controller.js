@@ -44,12 +44,12 @@ exports.update = function(req, res) {
 
 
 // Adds a note to an existing list in the DB.
-exports.update = function(req, res) {
+exports.addnote = function(req, res) {
   if(req.body._id) { delete req.body._id; }
   List.findById(req.params.id, function (err, list) {
     if (err) { return handleError(res, err); }
     if(!list) { return res.send(404); }
-    list.notes.push(req.body.noteId);
+    list.notes.push(req.body);
     list.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, list);
