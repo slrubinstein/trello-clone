@@ -24,14 +24,13 @@ angular.module('trelloApp')
   };
 
   function save() {
-    console.log(vm.noteName)
     var noteOptions = {
       name: vm.noteName,
       description: vm.noteDescription,
       listId: listService.lists[vm.listIndex]._id,
       noteIndex: vm.noteIndex
     };
-console.log(edit)
+    
     if (edit) {
       dataService.updateNote(noteOptions, vm.noteIndex)
       .then(function() {

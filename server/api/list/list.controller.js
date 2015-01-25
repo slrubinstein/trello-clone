@@ -51,10 +51,6 @@ exports.updateNote = function(req, res) {
   List.findById(req.params.id, function (err, list) {
     if (err) { return handleError(res, err); }
     if(!list) { return res.send(404); }
-    console.log(list.notes)
-    console.log('==================')
-    console.log(req.body.index)
-    console.log(req.body.noteOptions)
     list.notes.splice(req.body.index, 1, req.body.noteOptions);
     list.save(function (err) {
       if (err) { return handleError(res, err); }

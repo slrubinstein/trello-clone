@@ -1,14 +1,18 @@
 <script type="text/ng-template" id="noteModal.html">
   <div class="modal-header">
-    <input type="text"
-	    		class="modal-title"
-	    		ng-model="modal.noteName"
-	    		value="modal.noteName" />
+    <p>Note name:
+      <input type="text"
+	       	   class="form-control"
+	    		   ng-model="modal.noteName"
+	    		   value="modal.noteName" />
+    </p>
   </div>
   <div class="modal-body">
-  	<input type="textbox"
-  				 ng-model="modal.noteDescription"
-  				 value="modal.noteDescription" />
+    <p>Note description:</p>
+  	<textarea ng-model="modal.noteDescription"
+              class="form-control"
+  				    value="modal.noteDescription">
+    </textarea>
     
   </div>
   <div class="modal-footer">
