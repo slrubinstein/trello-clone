@@ -16,6 +16,7 @@ function dataService($http, $q) {
     deleteList: deleteList,
     rearrangeNotes: rearrangeNotes,
     rearrangeLists: rearrangeLists,
+    shareList: shareList,
     updateNote: updateNote,
     updateUserLists: updateUserLists
   }
@@ -52,6 +53,13 @@ function dataService($http, $q) {
     lists.forEach(function(list) {
       $http.put('/api/lists/' + list._id +'/rearrange', list);
     })    
+  }
+
+  function shareList(email, listId, userId) {
+    console.log(email, listId, userId)
+    return $http.put('/api/users/' + userId + '/share',
+              {listId: listId,
+              email: email});
   }
 
   function updateNote(noteOptions, noteIndex) {

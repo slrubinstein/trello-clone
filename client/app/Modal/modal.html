@@ -1,3 +1,4 @@
+<!-- Edit -->
 <script type="text/ng-template" id="noteModal.html">
   <div class="modal-header">
     <p>Note name:
@@ -20,6 +21,21 @@
             ng-click="modal.deleteNote()"
             ng-show="modal.edit">Delete</button>
     <button class="btn btn-primary" ng-click="modal.save()">Save</button>
+    <button class="btn btn-warning" ng-click="modal.cancel()">Cancel</button>
+  </div>
+</script>
+
+<!-- Share -->
+<script type="text/ng-template" id="shareModal.html">
+
+  <div class="modal-body">
+    <p>Enter an email address to share this list:</p>
+    <input class="form-control" 
+           type="text"
+           ng-model="modal.shareEmail" />
+    
+  </div>
+    <button class="btn btn-primary" ng-click="modal.share()">Share</button>
     <button class="btn btn-warning" ng-click="modal.cancel()">Cancel</button>
   </div>
 </script>

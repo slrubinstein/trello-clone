@@ -19,6 +19,9 @@ angular.module('trelloApp')
   vm.noteIndex = noteData.noteIndex;
   vm.noteName = noteData.noteName;
   vm.save = save;
+  vm.share = share;
+  vm.shareEmail = '';
+  vm.userId = noteData.userId;
 
   function cancel () {
     $modalInstance.dismiss('cancel');
@@ -48,5 +51,12 @@ angular.module('trelloApp')
         $modalInstance.close({msg: 'new note saved'});
       });
     }
+  }
+
+  function share() {
+    dataService.shareList(vm.shareEmail, listService.lists[vm.listIndex]._id, vm.userId)
+      .then(function() {
+        $modalInstance.close({msg: 'list shared'});
+    });
   }
 }

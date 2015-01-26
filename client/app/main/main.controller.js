@@ -16,6 +16,8 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
   vm.deleteList = deleteList;
   vm.get = get;
   vm.lists = [];
+  vm.shareEmail = '';
+  vm.shareList = shareList;
   vm.newListName = '';
   vm.newNoteName = '';
   vm.user = '';
@@ -80,6 +82,26 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
     listService.getLists(vm.user._id)
     .then(function(promise) {
       vm.lists = promise;
+    });
+  }
+
+  function shareList(index) {
+    var modalInstance = $modal.open({
+      templateUrl: 'shareModal.html',
+      resolve: {
+        noteData: function() {
+          return {
+            listIndex: index,
+            userId: vm.user._id
+          }
+        }
+      },
+      controller: 'ModalCtrl',
+      controllerAs: 'modal',
+    });
+
+    modalInstance.result.then(function(result) {
+      socket.socket.emit('update', vm.lists[index]);
     });
   }
 
