@@ -33,8 +33,8 @@ function dataService($http, $q) {
     return $http.get('/api/users/' + userId + '/lists');
   }
 
-  function deleteList() {
-
+  function deleteList(listId) {
+    return $http.delete('/api/lists/' + listId);
   }
 
   function rearrangeLists(userId, lists) {

@@ -4,10 +4,10 @@ angular.module('trelloApp')
   .controller('MainCtrl', MainCtrl);
 
 MainCtrl.$inject = ['socket', 'dataService', '$scope', 'Auth', 'User',
-                    'listService', '$modal'];
+                    'listService', '$modal', 'sortableOptions'];
 
 function MainCtrl(socket, dataService, $scope, Auth, User,
-                  listService, $modal) {
+                  listService, $modal, sortableOptions) {
 
   var vm = this;
 
@@ -20,36 +20,11 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
   vm.newNoteName = '';
   vm.user = '';
 
+  // options object for sortables
+  vm.sortOptions = sortableOptions.options;
+
   activate();
 
-  $scope.sortOptions = {
-
-    //restrict move across columns. move only within column.
-    accept: function (sourceItemHandleScope, destSortableScope) {
-      // notes can only switch with other notes
-      if (sourceItemHandleScope.itemScope.hasOwnProperty('note')) {
-        var n = destSortableScope.element[0].classList;
-        return Array.prototype.indexOf.call(n, 'note-group') >= 0;
-      // lists can only switch with other lists
-      } else if (sourceItemHandleScope.itemScope.hasOwnProperty('list')) {
-        var l = destSortableScope.element[0].classList;
-        return Array.prototype.indexOf.call(l, 'list-board') >= 0;
-      }
-    },
-    itemMoved: function (event) {
-      // notes moving between lists
-      dataService.rearrange(vm.lists);
-    },
-    orderChanged: function (event) {
-      // notes moving in parent list
-      if (event.source.itemScope.hasOwnProperty('note')) {
-        dataService.rearrange([event.source.sortableScope.$parent.list]);
-      }
-      if (event.source.itemScope.hasOwnProperty('list')) {
-        dataService.rearrangeLists(vm.user._id, vm.lists);
-      }
-    }
-  };
 
 
   function activate() {
@@ -71,7 +46,6 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
   });
 
   function createList() {
-    console.log(vm.lists)
     dataService.createList({
       name: vm.newListName,
       creatorId: vm.user._id,
@@ -116,8 +90,8 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
 
   }
 
-  function deleteList() {
-
+  function deleteList(index) {
+    vm.lists = listService.deleteList(index, vm.lists[index]._id);
   }
 
   function get() {
@@ -130,5 +104,6 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
       vm.lists = listService.lists;
     })
   }
+
 
 }

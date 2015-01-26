@@ -1,11 +1,15 @@
-<div data-as-sortable="sortOptions" 
+<div data-as-sortable="main.sortOptions" 
      ng-model="main.lists"
      class="list-board">
   <div class="list-column col-lg-2 col-md-2 col-sm-2"
        ng-repeat="list in main.lists"
        as-sortable-item>
 
-    <h4 as-sortable-item-handle>{{list.name}}</h4>
+    <h4 as-sortable-item-handle>
+      {{list.name}}
+      <button class="btn btn-xs btn-danger"
+              ng-click="main.deleteList($index)">x</button>
+    </h4>
     <p>Created by: <strong>{{list.creatorName}}</strong></p>
     <p>{{list.dateCreated | date:'longDate'}}</p>
 
