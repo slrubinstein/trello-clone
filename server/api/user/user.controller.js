@@ -123,6 +123,19 @@ exports.addList = function(req, res, next) {
 };
 
 /**
+ * Add new list
+ */
+exports.rearrangeLists = function(req, res, next) {
+  var userId = req.user._id;
+  User.findOne( { _id: userId } , function(err, user) {
+    if (err) return next(err);
+    user.lists = req.body;
+    user.save();
+    return res.send(200);
+  });
+};
+
+/**
  * Authentication callback
  */
 exports.authCallback = function(req, res, next) {

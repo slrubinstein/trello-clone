@@ -2,7 +2,6 @@
      ng-model="main.lists"
      class="list-board">
 
-<div data-as-sortable="sortOptions" ng-model="main.lists">
   <div class="list-column col-lg-2 col-md-2 col-sm-2"
        ng-repeat="list in main.lists"
        as-sortable-item>
@@ -15,7 +14,9 @@
     <p>Created by: <strong>{{list.creatorName}}</strong></p>
     <p>{{list.dateCreated | date:'longDate'}}</p>
 
-    <div data-as-sortable="sortOptions" ng-model="list.notes">
+    <div data-as-sortable="main.sortOptions" 
+         ng-model="list.notes"
+         class="note-group">
       <div ng-repeat="note in list.notes"
            ng-click="main.createNote($parent.$index, note.name, note.description, $index)"
            as-sortable-item>

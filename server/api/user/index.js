@@ -14,6 +14,7 @@ router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.get('/:id/lists', auth.isAuthenticated(), controller.getLists);
 router.put('/:id/lists/add', auth.isAuthenticated(), controller.addList);
+router.put('/:id/lists/rearrange', auth.isAuthenticated(), controller.rearrangeLists);
 router.post('/', controller.create);
 
 module.exports = router;
