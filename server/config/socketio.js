@@ -17,9 +17,11 @@ function onConnect(socket) {
     console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
   });
 
-  // Insert sockets below
-  require('../api/note/note.socket').register(socket);
-  require('../api/list/list.socket').register(socket);
+  socket.on('update', function(list) {
+    socket.emit('list:save', list);
+    socket.broadcast.emit('list:save', list);
+  });
+
 }
 
 module.exports = function (socketio) {
@@ -55,4 +57,7 @@ module.exports = function (socketio) {
     onConnect(socket);
     console.info('[%s] CONNECTED', socket.address);
   });
+  // Insert sockets below
+  require('../api/note/note.socket').register(socketio);
+  require('../api/list/list.socket').register(socketio);
 };

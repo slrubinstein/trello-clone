@@ -6,19 +6,19 @@
 
 var Note = require('./note.model');
 
-exports.register = function(socket) {
+exports.register = function(socketio) {
   Note.schema.post('save', function (doc) {
-    onSave(socket, doc);
+    onSave(socketio, doc);
   });
   Note.schema.post('remove', function (doc) {
-    onRemove(socket, doc);
+    onRemove(socketio, doc);
   });
 }
 
-function onSave(socket, doc, cb) {
-  socket.emit('note:save', doc);
+function onSave(socketio, doc, cb) {
+  socketio.emit('note:save', doc);
 }
 
-function onRemove(socket, doc, cb) {
-  socket.emit('note:remove', doc);
+function onRemove(socketio, doc, cb) {
+  socketio.emit('note:remove', doc);
 }

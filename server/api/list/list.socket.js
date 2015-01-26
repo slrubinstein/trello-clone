@@ -6,19 +6,19 @@
 
 var List = require('./list.model');
 
-exports.register = function(socket) {
+exports.register = function(socketio) {
   List.schema.post('save', function (doc) {
-    onSave(socket, doc);
+    onSave(socketio, doc);
   });
   List.schema.post('remove', function (doc) {
-    onRemove(socket, doc);
+    onRemove(socketio, doc);
   });
 }
 
-function onSave(socket, doc, cb) {
-  socket.emit('list:save', doc);
+function onSave(socketio, doc, cb) {
+  socketio.emit('list:save', doc);
 }
 
-function onRemove(socket, doc, cb) {
-  socket.emit('list:remove', doc);
+function onRemove(socketio, doc, cb) {
+  socketio.emit('list:remove', doc);
 }

@@ -24,7 +24,7 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
 
   function activate() {
     Auth.isLoggedInAsync(setUser);
-    socket.syncUpdates('list', vm.lists);
+    socket.syncUpdates('list', vm.lists, get);
 
     function setUser(validUser) {
       if (validUser) {
@@ -48,8 +48,6 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
     });
     vm.newListName = '';
   }
-
-
 
   function editNote(listIndex, noteName, noteDescription, noteIndex) {
     var modalInstance = $modal.open({
@@ -111,6 +109,7 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
       // sorting lists
       if (event.source.itemScope.hasOwnProperty('list')) {
         dataService.rearrangeLists(vm.user._id, vm.lists);
+        socket.socket.emit('update', vm.lists[0]);
       }
     }
   }
