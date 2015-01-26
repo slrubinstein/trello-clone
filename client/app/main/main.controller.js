@@ -22,8 +22,6 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
 
   activate();
 
-
-
   function activate() {
     Auth.isLoggedInAsync(setUser);
     socket.syncUpdates('list', vm.lists);
@@ -83,8 +81,6 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
     modalInstance.result.then(function(result) {
       get();
     });
-
-
   }
 
   function deleteList(index) {
@@ -92,14 +88,10 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
   }
 
   function get() {
-    dataService.get(vm.user._id)
-    .then(function(result) {
-      listService.lists.length = 0;
-      result.data.forEach(function(list) {
-        listService.lists.push(list);
-      });
-      vm.lists = listService.lists;
-    })
+    listService.getLists(vm.user._id)
+    .then(function(promise) {
+      vm.lists = promise;
+    });
   }
 
   // options object for sortables
