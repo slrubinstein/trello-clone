@@ -25,6 +25,27 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
 
   activate();
 
+  $scope.sortOptions = {
+
+    //restrict move across columns. move only within column.
+    accept: function (sourceItemHandleScope, destSortableScope) {
+      console.log(sourceItemHandleScope)
+      console.log(destSortableScope)
+      // return sourceItemHandleScope.itemScope.sortableScope.$id !== destSortableScope.$id;
+    },
+    itemMoved: function (event) {
+      // notes moving between lists
+      dataService.rearrange(vm.lists);
+    },
+    orderChanged: function (event) {
+      // notes moving in parent list
+      dataService.rearrange([event.source.sortableScope.$parent.list])
+    }
+    // containment: '#board'
+  };
+
+
+
 
 
   function activate() {
