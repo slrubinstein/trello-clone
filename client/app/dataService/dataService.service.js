@@ -37,6 +37,10 @@ function dataService($http, $q) {
     return $http.delete('/api/lists/' + listId);
   }
 
+  function deleteNote(listId, noteIndex) {
+    return $http.delete('/api/lists/' + listId);
+  }
+
   function rearrangeLists(userId, lists) {
     var listIds = lists.map(function(list) {
       return list._id;

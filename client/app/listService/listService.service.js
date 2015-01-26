@@ -13,6 +13,7 @@ function listService(dataService) {
     // createList: createList,
     // getLists: getLists,
     deleteList: deleteList,
+    deleteNote: deleteNote,
     lists: lists
   }
 
@@ -26,6 +27,11 @@ function listService(dataService) {
     dataService.deleteList(listId);
     lists.splice(index, 1);
     return lists;
+  }
+
+  function deleteNote(listIndex, noteIndex) {
+    lists[listIndex].notes.splice(noteIndex, 1);
+    dataService.rearrangeNotes([lists[listIndex]]);
   }
 
 }

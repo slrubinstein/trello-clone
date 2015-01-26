@@ -12,10 +12,10 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
   var vm = this;
 
   vm.createList = createList;
-  vm.createNote = createNote;
+  vm.editNote = editNote;
   vm.deleteList = deleteList;
   vm.get = get;
-  vm.lists = []
+  vm.lists = [];
   vm.newListName = '';
   vm.newNoteName = '';
   vm.user = '';
@@ -62,7 +62,7 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
     });
   }
 
-  function createNote(listIndex, noteName, noteDescription, noteIndex) {
+  function editNote(listIndex, noteName, noteDescription, noteIndex) {
     var modalInstance = $modal.open({
       templateUrl: 'noteModal.html',
       resolve: {
@@ -109,7 +109,6 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
       // notes can only switch with other notes
       if (sourceItemHandleScope.itemScope.hasOwnProperty('note')) {
         var n = destSortableScope.element[0].classList;
-        console.log(n)
         return Array.prototype.indexOf.call(n, 'note-group') >= 0;
       // lists can only switch with other lists
       } else if (sourceItemHandleScope.itemScope.hasOwnProperty('list')) {
@@ -123,9 +122,7 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
     },
     orderChanged: function (event) {
       // notes moving in parent list
-      console.log(event.source.itemScope)
       if (event.source.itemScope.hasOwnProperty('note')) {
-        console.log('note')
         dataService.rearrangeNotes([event.source.sortableScope.$parent.list]);
       }
       // sorting lists

@@ -16,7 +16,10 @@
     
   </div>
   <div class="modal-footer">
-    <button class="btn btn-success" ng-click="modal.save()">Save</button>
+    <button class="btn btn-danger delete" 
+            ng-click="modal.deleteNote()"
+            ng-show="modal.edit">Delete</button>
+    <button class="btn btn-primary" ng-click="modal.save()">Save</button>
     <button class="btn btn-warning" ng-click="modal.cancel()">Cancel</button>
   </div>
 </script>

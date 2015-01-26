@@ -9,10 +9,11 @@ angular.module('trelloApp')
  function ModalCtrl($modalInstance, noteData, dataService,
  										listService) {
 
-  var vm = this,
-      edit = typeof noteData.noteIndex === 'number' ? true : false;
+  var vm = this;
 
   vm.cancel = cancel;
+  vm.deleteNote = deleteNote;
+  vm.edit = typeof noteData.noteIndex === 'number' ? true : false;
   vm.listIndex = noteData.listIndex;
   vm.noteDescription = noteData.noteDescription;
   vm.noteIndex = noteData.noteIndex;
@@ -23,6 +24,11 @@ angular.module('trelloApp')
     $modalInstance.dismiss('cancel');
   };
 
+  function deleteNote() {
+    listService.deleteNote(vm.listIndex, vm.noteIndex);
+    $modalInstance.close({msg: 'note deleted'});
+  }
+
   function save() {
     var noteOptions = {
       name: vm.noteName,
@@ -31,7 +37,7 @@ angular.module('trelloApp')
       noteIndex: vm.noteIndex
     };
     
-    if (edit) {
+    if (vm.edit) {
       dataService.updateNote(noteOptions, vm.noteIndex)
       .then(function() {
         $modalInstance.close({msg: 'note updated'});

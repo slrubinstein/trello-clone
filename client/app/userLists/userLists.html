@@ -18,7 +18,7 @@
          ng-model="list.notes"
          class="note-group">
       <div ng-repeat="note in list.notes"
-           ng-click="main.createNote($parent.$index, note.name, note.description, $index)"
+           ng-click="main.editNote($parent.$index, note.name, note.description, $index)"
            as-sortable-item>
         <div class="note">
           <h5 as-sortable-item-handle>{{note.name}}</h5>
@@ -28,7 +28,7 @@
       </div>
     </div>
     <button class="btn btn-default"
-            ng-click="main.createNote($index)">New Note</button>
+            ng-click="main.editNote($index)">New Note</button>
 
   </div>
 </div>
