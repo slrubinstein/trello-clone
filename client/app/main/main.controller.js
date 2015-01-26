@@ -26,9 +26,15 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
 
     //restrict move across columns. move only within column.
     accept: function (sourceItemHandleScope, destSortableScope) {
-      console.log(sourceItemHandleScope)
-      console.log(destSortableScope)
-      // return sourceItemHandleScope.itemScope.sortableScope.$id !== destSortableScope.$id;
+      // notes can only switch with other notes
+      if (sourceItemHandleScope.itemScope.hasOwnProperty('note')) {
+        var n = destSortableScope.element[0].classList;
+        return Array.prototype.indexOf.call(n, 'note-group') >= 0;
+      // lists can only switch with other lists
+      } else if (sourceItemHandleScope.itemScope.hasOwnProperty('list')) {
+        var l = destSortableScope.element[0].classList;
+        return Array.prototype.indexOf.call(l, 'list-board') >= 0;
+      }
     },
     itemMoved: function (event) {
       // notes moving between lists
@@ -36,13 +42,14 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
     },
     orderChanged: function (event) {
       // notes moving in parent list
-      dataService.rearrange([event.source.sortableScope.$parent.list])
+      if (event.source.itemScope.hasOwnProperty('note')) {
+        dataService.rearrange([event.source.sortableScope.$parent.list]);
+      }
+      if (event.source.itemScope.hasOwnProperty('list')) {
+        dataService.rearrangeLists(vm.user._id, vm.lists);
+      }
     }
-    // containment: '#board'
   };
-
-
-
 
 
   function activate() {
