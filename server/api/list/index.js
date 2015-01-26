@@ -11,6 +11,7 @@ router.post('/', controller.create);
 router.put('/:id', controller.update);
 router.put('/:id/updatenote', controller.updateNote);
 router.put('/:id/addnote', controller.addNote);
+router.put('/:id/rearrange', controller.rearrange);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
 

@@ -14,7 +14,9 @@ function dataService($http, $q) {
     createNote: createNote,
     get: get,
     deleteList: deleteList,
+    rearrange: rearrange,
     updateNote: updateNote,
+    updateLists: updateLists,
     updateUserLists: updateUserLists
   }
 
@@ -35,11 +37,22 @@ function dataService($http, $q) {
 
   }
 
+  function rearrange(lists) {
+    lists.forEach(function(list) {
+      $http.put('/api/lists/' + list._id +'/rearrange', list);
+    })    
+  }
+
   function updateNote(noteOptions, noteIndex) {
-    console.log(noteOptions)
     return $http.put('/api/lists/' + noteOptions.listId + '/updatenote', 
       {index: noteIndex,
        noteOptions: noteOptions});
+  }
+
+  function updateLists(lists) {
+    // lists.forEach(function(list) {
+    //   $http.put('/api/lists/' + list._id, lists);
+    // })
   }
 
   function updateUserLists(userId, listId) {

@@ -22,6 +22,29 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
 
   activate();
 
+  $scope.sortOptions = {
+
+    //restrict move across columns. move only within column.
+    accept: function (sourceItemHandleScope, destSortableScope) {
+      console.log(sourceItemHandleScope)
+      console.log(destSortableScope)
+      // return sourceItemHandleScope.itemScope.sortableScope.$id !== destSortableScope.$id;
+    },
+    itemMoved: function (event) {
+      // notes moving between lists
+      dataService.rearrange(vm.lists);
+    },
+    orderChanged: function (event) {
+      // notes moving in parent list
+      dataService.rearrange([event.source.sortableScope.$parent.list])
+    }
+    // containment: '#board'
+  };
+
+
+
+
+
   function activate() {
     Auth.isLoggedInAsync(setUser);
     socket.syncUpdates('list', vm.lists);
@@ -41,7 +64,7 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
   });
 
   function createList() {
-
+    console.log(vm.lists)
     dataService.createList({
       name: vm.newListName,
       creatorId: vm.user._id,
@@ -57,12 +80,11 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
   function updateUserLists(listId) {
     dataService.updateUserLists(vm.user._id, listId)
     .then(function() {
-      get()
-    })
+      get();
+    });
   }
 
   function createNote(listIndex, noteName, noteDescription, noteIndex) {
-    console.log(noteIndex)
     var modalInstance = $modal.open({
       templateUrl: 'noteModal.html',
       resolve: {

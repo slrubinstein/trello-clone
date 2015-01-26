@@ -34,9 +34,13 @@ exports.update = function(req, res) {
   List.findById(req.params.id, function (err, list) {
     if (err) { return handleError(res, err); }
     if(!list) { return res.send(404); }
-    var updated = _.merge(list, req.body);
+    console.log('list---------------', list)
+    console.log('REQ BODY', req.body)
+    var updated = _.merge(list, req.body, function(a, b) {
+      return _.isArray(a) ? a.concat(b) : undefined;
+    });
+    console.log('updated-----------------', updated)
     updated.save(function (err) {
-      console.log(updated)
       if (err) { return handleError(res, err); }
       return res.json(200, list);
     });
@@ -66,6 +70,20 @@ exports.addNote = function(req, res) {
     if (err) { return handleError(res, err); }
     if(!list) { return res.send(404); }
     list.notes.push(req.body);
+    list.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, list);
+    });
+  });
+};
+
+// Rearrange note order to an existing list in the DB.
+exports.rearrange = function(req, res) {
+  if(req.body._id) { delete req.body._id; }
+  List.findById(req.params.id, function (err, list) {
+    if (err) { return handleError(res, err); }
+    if(!list) { return res.send(404); }
+    list.notes = req.body.notes;
     list.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, list);
