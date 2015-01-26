@@ -57,6 +57,8 @@ angular.module('trelloApp')
     dataService.shareList(vm.shareEmail, listService.lists[vm.listIndex]._id, vm.userId)
       .then(function() {
         $modalInstance.close({msg: 'list shared'});
-    });
+      }, function() {
+        $modalInstance.close({msg: 'user not found'});
+      });
   }
 }

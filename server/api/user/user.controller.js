@@ -142,7 +142,7 @@ exports.shareList = function(req, res, next) {
   var userId = req.user._id;
   User.findOne( { email: req.body.email } , function(err, user) {
     if (err) return next(err);
-    if(!user) return(500);
+    if(!user) return res.send(500);
     user.lists.push(req.body.listId);
     user.save();
     return res.send(200);

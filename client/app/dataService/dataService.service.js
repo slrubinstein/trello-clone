@@ -22,7 +22,7 @@ function dataService($http, $q) {
   }
 
   function createList(newListOptions) {
-    return $http.post('/api/lists', newListOptions)
+    return $http.post('/api/lists', newListOptions);
   }
 
   function createNote(newNoteOptions) {
@@ -56,7 +56,6 @@ function dataService($http, $q) {
   }
 
   function shareList(email, listId, userId) {
-    console.log(email, listId, userId)
     return $http.put('/api/users/' + userId + '/share',
               {listId: listId,
               email: email});
@@ -70,8 +69,8 @@ function dataService($http, $q) {
 
   function updateUserLists(userId, listId) {
     return $http.put('api/users/' + userId
-                  + '/lists/add', {listId: listId,
-                                   userId: userId})
+                    + '/lists/add', {listId: listId,
+                                     userId: userId})
   }
 
 };

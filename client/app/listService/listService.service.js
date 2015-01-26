@@ -53,10 +53,7 @@ function listService(dataService, $q) {
   }
 
   function updateUserLists(userId, listId) {
-    dataService.updateUserLists(userId, listId)
-    .then(function() {
-      getLists(userId);
-    });
+    dataService.updateUserLists(userId, listId);
   }
 
 }
