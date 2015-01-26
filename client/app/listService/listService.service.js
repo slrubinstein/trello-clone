@@ -10,14 +10,18 @@ function listService(dataService, $q) {
   var lists = [];
 
   return {
-    getLists: getLists,
+    createList: createList,
     deleteList: deleteList,
+    getLists: getLists,
     deleteNote: deleteNote,
     lists: lists
   }
 
   function createList(newListOptions) {
-    dataService.createList(newListOptions);
+    dataService.createList(newListOptions)
+      .then(function(result) {
+        updateUserLists(newListOptions.creatorId, result.data._id);
+      });
     lists.push(newListOptions);
     return lists;
   }
@@ -46,6 +50,13 @@ function listService(dataService, $q) {
   function deleteNote(listIndex, noteIndex) {
     lists[listIndex].notes.splice(noteIndex, 1);
     dataService.rearrangeNotes([lists[listIndex]]);
+  }
+
+  function updateUserLists(userId, listId) {
+    dataService.updateUserLists(userId, listId)
+    .then(function() {
+      getLists(userId);
+    });
   }
 
 }

@@ -41,24 +41,15 @@ function MainCtrl(socket, dataService, $scope, Auth, User,
   });
 
   function createList() {
-    dataService.createList({
+    vm.lists = listService.createList({
       name: vm.newListName,
       creatorId: vm.user._id,
       creatorName: vm.user.name
-    })
-    .then(function(result) {
-      updateUserLists(result.data._id)
-    })
-
+    });
     vm.newListName = '';
   }
 
-  function updateUserLists(listId) {
-    dataService.updateUserLists(vm.user._id, listId)
-    .then(function() {
-      get();
-    });
-  }
+
 
   function editNote(listIndex, noteName, noteDescription, noteIndex) {
     var modalInstance = $modal.open({
